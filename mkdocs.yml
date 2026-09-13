@@ -1,0 +1,106 @@
+site_name: ЛогиХаб Wiki
+site_description: База знаний цифрового продукта «ЛогиХаб» – платформы управления процессом логистики
+site_author: А.С. Попов
+site_url: https://starpxand.github.io/logihub-wiki/
+repo_url: https://github.com/starpxand/logihub-wiki
+repo_name: starpxand/logihub-wiki
+edit_uri: edit/main/docs/
+copyright: "&copy; 2026 Команда ЛогиХаб · Учебный проект, вариант 15 «Процесс управления логистикой»"
+
+theme:
+  name: material
+  language: ru
+  icon:
+    logo: material/truck-fast
+    repo: fontawesome/brands/github
+  favicon: assets/favicon.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Тёмная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Светлая тема
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+    - toc.follow
+
+nav:
+  - Главная: index.md
+  - Продукт:
+      - product/index.md
+      - Определение продукта: product/definition.md
+      - Состояние продукта: product/state.md
+      - Дополнительные метрики: product/metrics.md
+      - Развитие продукта: product/roadmap.md
+      - Артефакты: product/artifacts.md
+      - Таблица ролей: product/roles.md
+  - Техническая часть:
+      - tech/index.md
+      - Требования: tech/requirements.md
+      - Архитектура: tech/architecture.md
+      - Схема базы данных: tech/database.md
+      - API: tech/api.md
+      - Тестирование: tech/testing.md
+      - Безопасность: tech/security.md
+      - Развёртывание: tech/deployment.md
+  - Процессы:
+      - process/index.md
+  - Команда:
+      - Регламент дежурств: team/on-call.md
+      - Применение ИИ: team/ai-usage.md
+      - Журнал изменений Wiki: team/changelog.md
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/starpxand
+  generator: false
+
+extra_css:
+  - assets/extra.css

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>bpmn.io – logistics_process.bpmn</title>
+  <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17.11.1/dist/assets/diagram-js.css">
+  <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17.11.1/dist/assets/bpmn-js.css">
+  <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17.11.1/dist/assets/bpmn-font/css/bpmn.css">
+  <style>
+    html, body { margin: 0; height: 100%; font-family: Arial, sans-serif; }
+    #bar { height: 44px; display: flex; align-items: center; gap: 14px; padding: 0 16px;
+           background: #f8f8f8; border-bottom: 1px solid #ddd; font-size: 14px; color: #333; }
+    #bar b { color: #52b415; }
+    #canvas { position: absolute; top: 45px; bottom: 0; left: 0; right: 0; }
+    #svg-out { display: none; }
+  </style>
+</head>
+<body>
+  <div id="bar"><b>bpmn.io</b> <span>logistics_process.bpmn</span> <span id="status" style="color:#888">загрузка…</span></div>
+  <div id="canvas"></div>
+  <pre id="svg-out"></pre>
+  <script src="https://unpkg.com/bpmn-js@17.11.1/dist/bpmn-modeler.development.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const modeler = new BpmnJS({ container: '#canvas' });
+    if (params.get('nopalette')) document.head.insertAdjacentHTML('beforeend', '<style>.djs-palette{display:none}</style>');
+    fetch(params.get('file') || 'logistics_process.bpmn')
+      .then(r => r.text())
+      .then(xml => modeler.importXML(xml))
+      .then(({ warnings }) => {
+        document.getElementById('status').textContent = warnings.length ? ('предупреждений: ' + warnings.length) : 'диаграмма загружена';
+        const canvas = modeler.get('canvas');
+        const vb = params.get('viewbox');
+        if (vb) { const [x, y, w, h] = vb.split(',').map(Number); canvas.viewbox({ x, y, width: w, height: h }); }
+        else canvas.zoom('fit-viewport');
+        if (params.get('select')) {
+          const el = modeler.get('elementRegistry').get(params.get('select'));
+          if (el) modeler.get('selection').select(el);
+        }
+        return modeler.saveSVG();
+      })
+      .then(({ svg }) => { document.getElementById('svg-out').textContent = svg; document.title += ' ✓'; })
+      .catch(e => { document.getElementById('status').textContent = 'Ошибка: ' + e.message; });
+  </script>
+</body>
+</html>

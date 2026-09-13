@@ -4,6 +4,8 @@
 владеет своей схемой данных в PostgreSQL; межсервисное взаимодействие – синхронно
 по REST через шлюз и асинхронно через брокер событий.
 
+<span id="arch-diagram"></span>
+
 ```mermaid
 flowchart TB
     subgraph Clients[Клиенты]

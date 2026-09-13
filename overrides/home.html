@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+  <section class="lh-hero">
+    <div class="lh-hero__grid md-grid">
+      <div class="lh-hero__text">
+        <span class="lh-badge">Вариант 15 · Процесс управления логистикой</span>
+        <h1>Каждая поставка –<br><span>под контролем, в одном окне</span></h1>
+        <p>
+          ЛогиХаб – облачная платформа, которая объединяет заявку клиента, склад,
+          маршрутизацию, перевозку и приёмку груза в одном сквозном процессе.
+          Здесь – вся база знаний продукта: от KPI и планов до архитектуры и регламентов.
+        </p>
+        <div class="lh-hero__actions">
+          <a href="{{ 'product/definition/' | url }}" class="md-button md-button--primary">Узнать о продукте</a>
+          <a href="{{ 'tech/architecture/' | url }}" class="md-button lh-button--ghost">Архитектура</a>
+        </div>
+      </div>
+      <div class="lh-hero__panel">
+        <div class="lh-kpi lh-kpi--main">
+          <div class="lh-kpi__label">OTIF · релиз v2.0</div>
+          <div class="lh-kpi__value">87<small>%</small></div>
+          <div class="lh-kpi__bar"><i style="width:87%"></i></div>
+          <div class="lh-kpi__hint">Цель 2026 – 90 %</div>
+        </div>
+        <div class="lh-kpi-row">
+          <div class="lh-kpi"><div class="lh-kpi__label">v1.0</div><div class="lh-kpi__value">72<small>%</small></div></div>
+          <div class="lh-kpi"><div class="lh-kpi__label">v1.5</div><div class="lh-kpi__value">81<small>%</small></div></div>
+          <div class="lh-kpi"><div class="lh-kpi__label">Заказов</div><div class="lh-kpi__value">5,8<small>тыс.</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block content %}
+  {{ super() }}
+{% endblock %}

@@ -1,37 +1,50 @@
 ---
+template: home.html
+title: Главная
 hide:
   - navigation
+  - toc
 ---
 
-# ЛогиХаб
+# База знаний продукта
 
-> **Каждая поставка – под контролем, в одном окне.**
-
-**ЛогиХаб** (LogiHub) – облачная платформа управления процессом логистики:
-от приёма заявки клиента и комплектации груза на складе до построения маршрута,
-контроля перевозки и подтверждения доставки. Wiki – единая точка правды для
-команды продукта: здесь хранятся описание продукта, KPI, планы развития,
-артефакты исследований, архитектурные решения и регламенты.
+Wiki – единая точка правды для команды ЛогиХаба. Выберите раздел, чтобы начать.
 
 <div class="grid cards" markdown>
 
--   :material-bullseye-arrow:{ .lg .middle } **Продукт**
+-   :material-bullseye-arrow:{ .lg .middle } **Определение продукта**
 
     ---
 
-    Суть продукта, целевая аудитория, текущее состояние и главный KPI – OTIF.
+    Какую проблему решаем, для кого делаем продукт и чем он отличается.
 
-    [:octicons-arrow-right-24: Определение продукта](product/definition.md)
+    [:octicons-arrow-right-24: Открыть](product/definition.md)
 
--   :material-chart-line:{ .lg .middle } **Состояние продукта**
+-   :material-chart-timeline-variant-shimmer:{ .lg .middle } **Состояние продукта**
 
     ---
 
-    Динамика OTIF по релизам v1.0 → v1.5 → v2.0 и вспомогательные метрики.
+    Главный KPI – OTIF – и его динамика по релизам v1.0 → v1.5 → v2.0.
 
     [:octicons-arrow-right-24: KPI и графики](product/state.md)
 
--   :material-sitemap:{ .lg .middle } **Архитектура**
+-   :material-map-marker-path:{ .lg .middle } **Развитие продукта**
+
+    ---
+
+    Цели, эпики, гипотезы, дорожная карта, очереди и доска спринта.
+
+    [:octicons-arrow-right-24: Дорожная карта](product/roadmap.md)
+
+-   :material-folder-star-outline:{ .lg .middle } **Артефакты**
+
+    ---
+
+    Интервью с клиентами, exit-интервью, схемы и дизайн-документы.
+
+    [:octicons-arrow-right-24: Материалы](product/artifacts.md)
+
+-   :material-sitemap-outline:{ .lg .middle } **Архитектура**
 
     ---
 
@@ -39,11 +52,11 @@ hide:
 
     [:octicons-arrow-right-24: Техническая часть](tech/architecture.md)
 
--   :material-account-group:{ .lg .middle } **Команда**
+-   :material-account-group-outline:{ .lg .middle } **Команда и роли**
 
     ---
 
-    Кто отвечает за какую часть продукта и как устроены дежурства.
+    Зоны ответственности, матрица RACI и регламент дежурств.
 
     [:octicons-arrow-right-24: Таблица ролей](product/roles.md)
 
@@ -59,6 +72,6 @@ hide:
 | Расписание дежурств | [Регламент дежурств](team/on-call.md) |
 | Исходный код Wiki | [starpxand/logihub-wiki](https://github.com/starpxand/logihub-wiki) |
 
-!!! info "Статус документа"
-    Wiki ведётся командой продукта. Последняя крупная ревизия – релиз **v2.0**
-    (февраль 2026). Предложения по правкам – через Pull Request в репозиторий Wiki.
+!!! info "Как вносить изменения"
+    Wiki ведётся по принципу «docs as code»: правки – через Pull Request в
+    репозиторий, публикация на GitHub Pages – автоматически после слияния в `main`.

@@ -9,21 +9,25 @@ copyright: "&copy; 2026 Команда ЛогиХаб · Учебный прое
 
 theme:
   name: material
+  custom_dir: overrides
   language: ru
-  icon:
-    logo: material/truck-fast
-    repo: fontawesome/brands/github
+  logo: assets/logo.svg
   favicon: assets/favicon.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
   palette:
     - scheme: default
-      primary: indigo
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Тёмная тема
     - scheme: slate
-      primary: indigo
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Светлая тема
@@ -33,6 +37,9 @@ theme:
     - navigation.top
     - navigation.indexes
     - navigation.footer
+    - navigation.instant
+    - navigation.tracking
+    - content.tooltips
     - search.suggest
     - search.highlight
     - content.tabs.link

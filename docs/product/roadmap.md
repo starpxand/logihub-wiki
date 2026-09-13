@@ -34,17 +34,4 @@
 
 ## Дорожная карта { #gantt }
 
-```mermaid
-gantt
-    title Дорожная карта ЛогиХаб, 2026
-    dateFormat  YYYY-MM-DD
-    axisFormat  %d.%m
-    section Процессы
-    BPMN-модель процесса логистики   :done,    p1, 2026-09-01, 21d
-    section Дизайн
-    UX/UI-макет приложения           :active,  d1, 2026-09-15, 30d
-    section Аналитика
-    Дашборд OTIF и финансов          :         a1, 2026-10-01, 30d
-    section Каналы
-    Telegram-бот                     :         b1, 2026-10-20, 40d
-```
+![Дорожная карта ЛогиХаб на II полугодие 2026 года](../assets/img/roadmap.svg)

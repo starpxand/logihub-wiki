@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_LogiHub" targetNamespace="https://starpxand.github.io/logihub-wiki/bpmn"
+                  exporter="LogiHub build_bpmn.py" exporterVersion="1.0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_Logistics" name="ЛогиХаб: процесс управления логистикой" processRef="Process_Logistics" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Logistics" name="Процесс управления логистикой" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Client" name="Клиент (грузоотправитель)">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_CreateOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Clarify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Pay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Accept</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Remarks</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_SignAct</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Manager" name="Менеджер по логистике">
+        <bpmn:flowNodeRef>T_CheckOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_OrderOk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Quote</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Contract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Paid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Cancel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Claim</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Close</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Warehouse" name="Склад">
+        <bpmn:flowNodeRef>T_Pick</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Full</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Refill</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Waybill</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Dispatcher" name="Диспетчер">
+        <bpmn:flowNodeRef>T_Route</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Replan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Notified</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Driver" name="Водитель">
+        <bpmn:flowNodeRef>T_Load</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Transport</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Deliver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B_Delay</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" name="Возникла потребность в перевозке">
+      <bpmn:outgoing>F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="T_CreateOrder" name="Оформить заявку на перевозку">
+      <bpmn:incoming>F1</bpmn:incoming>
+      <bpmn:outgoing>F2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_Request"><bpmn:targetRef>D_RequestRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_CheckOrder" name="Проверить заявку">
+      <bpmn:incoming>F2</bpmn:incoming>
+      <bpmn:incoming>F5</bpmn:incoming>
+      <bpmn:outgoing>F3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_OrderOk" name="Заявка корректна?">
+      <bpmn:incoming>F3</bpmn:incoming>
+      <bpmn:outgoing>F4</bpmn:outgoing>
+      <bpmn:outgoing>F6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_Clarify" name="Уточнить данные заявки">
+      <bpmn:incoming>F4</bpmn:incoming>
+      <bpmn:outgoing>F5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="T_Quote" name="Рассчитать стоимость и срок доставки">
+      <bpmn:incoming>F6</bpmn:incoming>
+      <bpmn:outgoing>F7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="T_Contract" name="Сформировать договор-счёт">
+      <bpmn:incoming>F7</bpmn:incoming>
+      <bpmn:outgoing>F8</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_Invoice"><bpmn:targetRef>D_InvoiceRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Pay" name="Согласовать и оплатить счёт">
+      <bpmn:incoming>F8</bpmn:incoming>
+      <bpmn:outgoing>F9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_Paid" name="Оплата поступила в течение 3 дней?">
+      <bpmn:incoming>F9</bpmn:incoming>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+      <bpmn:outgoing>F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Cancel" name="Заказ отменён">
+      <bpmn:incoming>F10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="T_Pick" name="Скомплектовать и промаркировать груз">
+      <bpmn:incoming>F11</bpmn:incoming>
+      <bpmn:incoming>F14</bpmn:incoming>
+      <bpmn:outgoing>F12</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_Full" name="Груз укомплектован полностью?">
+      <bpmn:incoming>F12</bpmn:incoming>
+      <bpmn:outgoing>F13</bpmn:outgoing>
+      <bpmn:outgoing>F15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_Refill" name="Докомплектовать груз">
+      <bpmn:incoming>F13</bpmn:incoming>
+      <bpmn:outgoing>F14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Waybill" name="Оформить ТТН и передать груз к отгрузке">
+      <bpmn:incoming>F15</bpmn:incoming>
+      <bpmn:outgoing>F16</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_Waybill"><bpmn:targetRef>D_WaybillRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="T_Route" name="Построить маршрут и назначить транспорт">
+      <bpmn:incoming>F16</bpmn:incoming>
+      <bpmn:outgoing>F17</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_RouteSheet"><bpmn:targetRef>D_RouteSheetRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="T_Load" name="Принять груз и начать рейс">
+      <bpmn:incoming>F17</bpmn:incoming>
+      <bpmn:outgoing>F18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Transport" name="Выполнить перевозку">
+      <bpmn:incoming>F18</bpmn:incoming>
+      <bpmn:outgoing>F21</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="T_Replan" name="Перепланировать маршрут и уведомить клиента">
+      <bpmn:incoming>F19</bpmn:incoming>
+      <bpmn:outgoing>F20</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Notified" name="Клиент уведомлён о новом ETA">
+      <bpmn:incoming>F20</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="T_Deliver" name="Доставить груз получателю">
+      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:outgoing>F22</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Accept" name="Принять груз и проверить комплектность">
+      <bpmn:incoming>F22</bpmn:incoming>
+      <bpmn:outgoing>F23</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_Claim"><bpmn:targetRef>D_ClaimRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_Remarks" name="Есть замечания?">
+      <bpmn:incoming>F23</bpmn:incoming>
+      <bpmn:outgoing>F24</bpmn:outgoing>
+      <bpmn:outgoing>F25</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="T_SignAct" name="Подписать акт приёмки">
+      <bpmn:incoming>F24</bpmn:incoming>
+      <bpmn:outgoing>F26</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DA_D_Act"><bpmn:targetRef>D_ActRef</bpmn:targetRef></bpmn:dataOutputAssociation>
+    </bpmn:userTask>
+    <bpmn:userTask id="T_Claim" name="Рассмотреть претензию и урегулировать">
+      <bpmn:incoming>F25</bpmn:incoming>
+      <bpmn:outgoing>F27</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_Merge">
+      <bpmn:incoming>F26</bpmn:incoming>
+      <bpmn:incoming>F27</bpmn:incoming>
+      <bpmn:outgoing>F28</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="T_Close" name="Закрыть заказ и пересчитать OTIF">
+      <bpmn:incoming>F28</bpmn:incoming>
+      <bpmn:outgoing>F29</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Done" name="Заказ выполнен">
+      <bpmn:incoming>F29</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="B_Delay" name="Отклонение от графика" cancelActivity="false" attachedToRef="T_Transport">
+      <bpmn:outgoing>F19</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerDef_Delay"><bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2H</bpmn:timeDuration></bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="F1" sourceRef="Start" targetRef="T_CreateOrder" />
+    <bpmn:sequenceFlow id="F2" sourceRef="T_CreateOrder" targetRef="T_CheckOrder" />
+    <bpmn:sequenceFlow id="F3" sourceRef="T_CheckOrder" targetRef="G_OrderOk" />
+    <bpmn:sequenceFlow id="F4" name="Нет" sourceRef="G_OrderOk" targetRef="T_Clarify" />
+    <bpmn:sequenceFlow id="F5" sourceRef="T_Clarify" targetRef="T_CheckOrder" />
+    <bpmn:sequenceFlow id="F6" name="Да" sourceRef="G_OrderOk" targetRef="T_Quote" />
+    <bpmn:sequenceFlow id="F7" sourceRef="T_Quote" targetRef="T_Contract" />
+    <bpmn:sequenceFlow id="F8" sourceRef="T_Contract" targetRef="T_Pay" />
+    <bpmn:sequenceFlow id="F9" sourceRef="T_Pay" targetRef="G_Paid" />
+    <bpmn:sequenceFlow id="F10" name="Нет" sourceRef="G_Paid" targetRef="End_Cancel" />
+    <bpmn:sequenceFlow id="F11" name="Да" sourceRef="G_Paid" targetRef="T_Pick" />
+    <bpmn:sequenceFlow id="F12" sourceRef="T_Pick" targetRef="G_Full" />
+    <bpmn:sequenceFlow id="F13" name="Нет" sourceRef="G_Full" targetRef="T_Refill" />
+    <bpmn:sequenceFlow id="F14" sourceRef="T_Refill" targetRef="T_Pick" />
+    <bpmn:sequenceFlow id="F15" name="Да" sourceRef="G_Full" targetRef="T_Waybill" />
+    <bpmn:sequenceFlow id="F16" sourceRef="T_Waybill" targetRef="T_Route" />
+    <bpmn:sequenceFlow id="F17" sourceRef="T_Route" targetRef="T_Load" />
+    <bpmn:sequenceFlow id="F18" sourceRef="T_Load" targetRef="T_Transport" />
+    <bpmn:sequenceFlow id="F19" sourceRef="B_Delay" targetRef="T_Replan" />
+    <bpmn:sequenceFlow id="F20" sourceRef="T_Replan" targetRef="End_Notified" />
+    <bpmn:sequenceFlow id="F21" sourceRef="T_Transport" targetRef="T_Deliver" />
+    <bpmn:sequenceFlow id="F22" sourceRef="T_Deliver" targetRef="T_Accept" />
+    <bpmn:sequenceFlow id="F23" sourceRef="T_Accept" targetRef="G_Remarks" />
+    <bpmn:sequenceFlow id="F24" name="Нет" sourceRef="G_Remarks" targetRef="T_SignAct" />
+    <bpmn:sequenceFlow id="F25" name="Да" sourceRef="G_Remarks" targetRef="T_Claim" />
+    <bpmn:sequenceFlow id="F26" sourceRef="T_SignAct" targetRef="G_Merge" />
+    <bpmn:sequenceFlow id="F27" sourceRef="T_Claim" targetRef="G_Merge" />
+    <bpmn:sequenceFlow id="F28" sourceRef="G_Merge" targetRef="T_Close" />
+    <bpmn:sequenceFlow id="F29" sourceRef="T_Close" targetRef="End_Done" />
+    <bpmn:dataObjectReference id="D_RequestRef" name="Заявка на перевозку" dataObjectRef="D_Request" />
+    <bpmn:dataObject id="D_Request" />
+    <bpmn:dataObjectReference id="D_InvoiceRef" name="Договор-счёт" dataObjectRef="D_Invoice" />
+    <bpmn:dataObject id="D_Invoice" />
+    <bpmn:dataObjectReference id="D_WaybillRef" name="ТТН" dataObjectRef="D_Waybill" />
+    <bpmn:dataObject id="D_Waybill" />
+    <bpmn:dataObjectReference id="D_RouteSheetRef" name="Маршрутный лист" dataObjectRef="D_RouteSheet" />
+    <bpmn:dataObject id="D_RouteSheet" />
+    <bpmn:dataObjectReference id="D_ActRef" name="Акт приёмки" dataObjectRef="D_Act" />
+    <bpmn:dataObject id="D_Act" />
+    <bpmn:dataObjectReference id="D_ClaimRef" name="Претензия" dataObjectRef="D_Claim" />
+    <bpmn:dataObject id="D_Claim" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Pool_di" bpmnElement="Participant_Logistics" isHorizontal="true">
+        <dc:Bounds x="40" y="40" width="3655" height="994" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Client_di" bpmnElement="Lane_Client" isHorizontal="true">
+        <dc:Bounds x="70" y="40" width="3625" height="184" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Manager_di" bpmnElement="Lane_Manager" isHorizontal="true">
+        <dc:Bounds x="70" y="224" width="3625" height="207" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Warehouse_di" bpmnElement="Lane_Warehouse" isHorizontal="true">
+        <dc:Bounds x="70" y="431" width="3625" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Dispatcher_di" bpmnElement="Lane_Dispatcher" isHorizontal="true">
+        <dc:Bounds x="70" y="661" width="3625" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Driver_di" bpmnElement="Lane_Driver" isHorizontal="true">
+        <dc:Bounds x="70" y="891" width="3625" height="143" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="254" y="86" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="212" y="126" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_CreateOrder_di" bpmnElement="T_CreateOrder">
+        <dc:Bounds x="372" y="64" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_CheckOrder_di" bpmnElement="T_CheckOrder">
+        <dc:Bounds x="538" y="248" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_OrderOk_di" bpmnElement="G_OrderOk" isMarkerVisible="true">
+        <dc:Bounds x="742" y="262" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="778" y="232" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Clarify_di" bpmnElement="T_Clarify">
+        <dc:Bounds x="702" y="64" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Quote_di" bpmnElement="T_Quote">
+        <dc:Bounds x="868" y="248" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Contract_di" bpmnElement="T_Contract">
+        <dc:Bounds x="1032" y="248" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Pay_di" bpmnElement="T_Pay">
+        <dc:Bounds x="1198" y="64" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Paid_di" bpmnElement="G_Paid" isMarkerVisible="true">
+        <dc:Bounds x="1402" y="262" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1438" y="232" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Cancel_di" bpmnElement="End_Cancel">
+        <dc:Bounds x="1410" y="384" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1286" y="386" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Pick_di" bpmnElement="T_Pick">
+        <dc:Bounds x="1528" y="454" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Full_di" bpmnElement="G_Full" isMarkerVisible="true">
+        <dc:Bounds x="1732" y="470" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1768" y="440" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Refill_di" bpmnElement="T_Refill">
+        <dc:Bounds x="1692" y="570" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Waybill_di" bpmnElement="T_Waybill">
+        <dc:Bounds x="1858" y="454" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Route_di" bpmnElement="T_Route">
+        <dc:Bounds x="2022" y="684" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Load_di" bpmnElement="T_Load">
+        <dc:Bounds x="2188" y="934" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Transport_di" bpmnElement="T_Transport">
+        <dc:Bounds x="2352" y="934" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Replan_di" bpmnElement="T_Replan">
+        <dc:Bounds x="2352" y="800" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Notified_di" bpmnElement="End_Notified">
+        <dc:Bounds x="2564" y="822" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2522" y="782" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Deliver_di" bpmnElement="T_Deliver">
+        <dc:Bounds x="2518" y="934" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Accept_di" bpmnElement="T_Accept">
+        <dc:Bounds x="2682" y="64" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Remarks_di" bpmnElement="G_Remarks" isMarkerVisible="true">
+        <dc:Bounds x="2888" y="78" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2924" y="48" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_SignAct_di" bpmnElement="T_SignAct">
+        <dc:Bounds x="3012" y="64" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Claim_di" bpmnElement="T_Claim">
+        <dc:Bounds x="3012" y="248" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Merge_di" bpmnElement="G_Merge" isMarkerVisible="true">
+        <dc:Bounds x="3218" y="262" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Close_di" bpmnElement="T_Close">
+        <dc:Bounds x="3342" y="248" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Done_di" bpmnElement="End_Done">
+        <dc:Bounds x="3554" y="270" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="3512" y="310" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="B_Delay_di" bpmnElement="B_Delay">
+        <dc:Bounds x="2432" y="916" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2316" y="902" width="120" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1">
+        <di:waypoint x="290" y="104" />
+        <di:waypoint x="372" y="104" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_di" bpmnElement="F2">
+        <di:waypoint x="502" y="104" />
+        <di:waypoint x="520" y="104" />
+        <di:waypoint x="520" y="288" />
+        <di:waypoint x="538" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F3_di" bpmnElement="F3">
+        <di:waypoint x="668" y="288" />
+        <di:waypoint x="742" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F4_di" bpmnElement="F4">
+        <di:waypoint x="768" y="262" />
+        <di:waypoint x="768" y="144" />
+        <bpmndi:BPMNLabel><dc:Bounds x="774" y="196" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F5_di" bpmnElement="F5">
+        <di:waypoint x="702" y="104" />
+        <di:waypoint x="602" y="104" />
+        <di:waypoint x="602" y="248" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F6_di" bpmnElement="F6">
+        <di:waypoint x="792" y="288" />
+        <di:waypoint x="868" y="288" />
+        <bpmndi:BPMNLabel><dc:Bounds x="800" y="292" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F7_di" bpmnElement="F7">
+        <di:waypoint x="998" y="288" />
+        <di:waypoint x="1032" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F8_di" bpmnElement="F8">
+        <di:waypoint x="1162" y="288" />
+        <di:waypoint x="1180" y="288" />
+        <di:waypoint x="1180" y="104" />
+        <di:waypoint x="1198" y="104" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F9_di" bpmnElement="F9">
+        <di:waypoint x="1328" y="104" />
+        <di:waypoint x="1365" y="104" />
+        <di:waypoint x="1365" y="288" />
+        <di:waypoint x="1402" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1428" y="312" />
+        <di:waypoint x="1428" y="384" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1434" y="342" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11">
+        <di:waypoint x="1452" y="288" />
+        <di:waypoint x="1490" y="288" />
+        <di:waypoint x="1490" y="494" />
+        <di:waypoint x="1528" y="494" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1460" y="292" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
+        <di:waypoint x="1658" y="494" />
+        <di:waypoint x="1732" y="494" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
+        <di:waypoint x="1758" y="520" />
+        <di:waypoint x="1758" y="570" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1764" y="538" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
+        <di:waypoint x="1692" y="610" />
+        <di:waypoint x="1592" y="610" />
+        <di:waypoint x="1592" y="534" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
+        <di:waypoint x="1782" y="494" />
+        <di:waypoint x="1858" y="494" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1790" y="498" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16">
+        <di:waypoint x="1988" y="494" />
+        <di:waypoint x="2005" y="494" />
+        <di:waypoint x="2005" y="724" />
+        <di:waypoint x="2022" y="724" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
+        <di:waypoint x="2152" y="724" />
+        <di:waypoint x="2170" y="724" />
+        <di:waypoint x="2170" y="974" />
+        <di:waypoint x="2188" y="974" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F18_di" bpmnElement="F18">
+        <di:waypoint x="2318" y="974" />
+        <di:waypoint x="2352" y="974" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F19_di" bpmnElement="F19">
+        <di:waypoint x="2450" y="916" />
+        <di:waypoint x="2450" y="880" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F20_di" bpmnElement="F20">
+        <di:waypoint x="2482" y="840" />
+        <di:waypoint x="2564" y="840" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F21_di" bpmnElement="F21">
+        <di:waypoint x="2482" y="974" />
+        <di:waypoint x="2518" y="974" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F22_di" bpmnElement="F22">
+        <di:waypoint x="2648" y="974" />
+        <di:waypoint x="2665" y="974" />
+        <di:waypoint x="2665" y="104" />
+        <di:waypoint x="2682" y="104" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F23_di" bpmnElement="F23">
+        <di:waypoint x="2812" y="104" />
+        <di:waypoint x="2888" y="104" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F24_di" bpmnElement="F24">
+        <di:waypoint x="2938" y="104" />
+        <di:waypoint x="3012" y="104" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2946" y="108" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F25_di" bpmnElement="F25">
+        <di:waypoint x="2912" y="128" />
+        <di:waypoint x="2912" y="288" />
+        <di:waypoint x="3012" y="288" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2918" y="201" width="26" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F26_di" bpmnElement="F26">
+        <di:waypoint x="3142" y="104" />
+        <di:waypoint x="3180" y="104" />
+        <di:waypoint x="3180" y="288" />
+        <di:waypoint x="3218" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F27_di" bpmnElement="F27">
+        <di:waypoint x="3142" y="288" />
+        <di:waypoint x="3218" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F28_di" bpmnElement="F28">
+        <di:waypoint x="3268" y="288" />
+        <di:waypoint x="3342" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F29_di" bpmnElement="F29">
+        <di:waypoint x="3472" y="288" />
+        <di:waypoint x="3554" y="288" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_Request_di" bpmnElement="D_RequestRef">
+        <dc:Bounds x="384" y="156" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="424" y="172" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_Request_di" bpmnElement="DA_D_Request">
+        <di:waypoint x="482" y="144" />
+        <di:waypoint x="394" y="156" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_Invoice_di" bpmnElement="D_InvoiceRef">
+        <dc:Bounds x="1166" y="186" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1206" y="202" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_Invoice_di" bpmnElement="DA_D_Invoice">
+        <di:waypoint x="1142" y="248" />
+        <di:waypoint x="1176" y="236" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_Waybill_di" bpmnElement="D_WaybillRef">
+        <dc:Bounds x="1992" y="392" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2032" y="408" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_Waybill_di" bpmnElement="DA_D_Waybill">
+        <di:waypoint x="1968" y="454" />
+        <di:waypoint x="2002" y="442" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_RouteSheet_di" bpmnElement="D_RouteSheetRef">
+        <dc:Bounds x="2156" y="622" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2196" y="638" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_RouteSheet_di" bpmnElement="DA_D_RouteSheet">
+        <di:waypoint x="2132" y="684" />
+        <di:waypoint x="2166" y="672" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_Act_di" bpmnElement="D_ActRef">
+        <dc:Bounds x="3024" y="156" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="3064" y="172" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_Act_di" bpmnElement="DA_D_Act">
+        <di:waypoint x="3122" y="144" />
+        <di:waypoint x="3034" y="156" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="D_Claim_di" bpmnElement="D_ClaimRef">
+        <dc:Bounds x="2694" y="156" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2734" y="172" width="90" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DA_D_Claim_di" bpmnElement="DA_D_Claim">
+        <di:waypoint x="2792" y="144" />
+        <di:waypoint x="2704" y="156" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

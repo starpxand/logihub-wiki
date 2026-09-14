@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 400" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <style>
+    .m{font-size:13px;fill:#64748b;font-weight:600}
+    .lane{font-size:14px;fill:#0b1b3f;font-weight:700}
+    .bt{font-size:13px;font-weight:600;fill:#fff}
+    .bd{font-size:13px;font-weight:600;fill:#1b1300}
+    .grid{stroke:#e2e8f0;stroke-width:1}
+  </style>
+  <defs>
+    <linearGradient id="or" x1="0" x2="1"><stop offset="0" stop-color="#ffb547"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+  </defs>
+  <rect width="1120" height="400" rx="18" fill="#fff"/>
+  <text x="30" y="42" font-size="18" font-weight="800" fill="#0b1b3f">Дорожная карта ЛогиХаб · II полугодие 2026</text>
+  <!-- месяцы: 200..1100, 6 месяцев по 150px -->
+  <g>
+    <line class="grid" x1="200" y1="70" x2="200" y2="370"/><line class="grid" x1="350" y1="70" x2="350" y2="370"/>
+    <line class="grid" x1="500" y1="70" x2="500" y2="370"/><line class="grid" x1="650" y1="70" x2="650" y2="370"/>
+    <line class="grid" x1="800" y1="70" x2="800" y2="370"/><line class="grid" x1="950" y1="70" x2="950" y2="370"/>
+    <line class="grid" x1="1100" y1="70" x2="1100" y2="370"/>
+    <text class="m" x="275" y="88" text-anchor="middle">Июль</text><text class="m" x="425" y="88" text-anchor="middle">Август</text>
+    <text class="m" x="575" y="88" text-anchor="middle">Сентябрь</text><text class="m" x="725" y="88" text-anchor="middle">Октябрь</text>
+    <text class="m" x="875" y="88" text-anchor="middle">Ноябрь</text><text class="m" x="1025" y="88" text-anchor="middle">Декабрь</text>
+  </g>
+  <text class="lane" x="30" y="136">Процессы</text>
+  <text class="lane" x="30" y="196">Дизайн</text>
+  <text class="lane" x="30" y="256">Аналитика</text>
+  <text class="lane" x="30" y="316">Каналы</text>
+
+  <rect x="500" y="112" width="105" height="36" rx="9" fill="#0b1b3f"/><text class="bt" x="512" y="135">BPMN 2.0 ✓</text>
+  <rect x="573" y="172" width="150" height="36" rx="9" fill="#2f5bea"/><text class="bt" x="585" y="195">UX/UI-макет</text>
+  <rect x="650" y="232" width="150" height="36" rx="9" fill="#2f5bea"/><text class="bt" x="662" y="255">Дашборд OTIF</text>
+  <rect x="745" y="292" width="200" height="36" rx="9" fill="url(#or)"/><text class="bd" x="757" y="315">Telegram-бот + дашборд</text>
+  <rect x="950" y="112" width="150" height="36" rx="9" fill="#e2e8f0"/><text x="962" y="135" font-size="13" font-weight="600" fill="#334155">Резерв ТС (сезон)</text>
+
+  <!-- сегодня -->
+  <line x1="570" y1="70" x2="570" y2="370" stroke="#ff8a3d" stroke-width="2" stroke-dasharray="5 4"/>
+  <rect x="535" y="352" width="70" height="24" rx="12" fill="#ff8a3d"/><text x="570" y="369" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">сегодня</text>
+</svg>

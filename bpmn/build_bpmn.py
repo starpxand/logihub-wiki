@@ -218,11 +218,13 @@ def main() -> None:
             ly = y + h + 5
             lx = x + w / 2 - lw / 2
             if kind == "exclusiveGateway":
-                lx, ly = x - lw + 18, y + h - 4
-            if kind == "endEvent" and nid != "End_Done":
-                lx, ly = x + w + 6, y + 2
+                lx, ly = x + w - 14, y - 30
+            if nid == "End_Cancel":
+                lx, ly = x - lw - 4, y + 2
+            if nid == "End_Notified":
+                lx, ly = x + w / 2 - lw / 2, y - 40
             if nid == "B_Delay":
-                lx, ly = x + w + 4, y + 6
+                lx, ly = x - lw + 4, y - 14
             di.append(f'        <bpmndi:BPMNLabel><dc:Bounds x="{lx:.0f}" y="{ly:.0f}" width="{lw}" height="36" /></bpmndi:BPMNLabel>')
         di.append("      </bpmndi:BPMNShape>")
     for fid, s, t, name, kind in FLOWS:
@@ -231,7 +233,11 @@ def main() -> None:
         di.extend(f'        <di:waypoint x="{px:.0f}" y="{py:.0f}" />' for px, py in pts)
         if name:
             (ax, ay), (bx, by) = pts[0], pts[1]
-            di.append(f'        <bpmndi:BPMNLabel><dc:Bounds x="{(ax + bx) / 2 + 6:.0f}" y="{(ay + by) / 2 - 20:.0f}" width="26" height="14" /></bpmndi:BPMNLabel>')
+            if abs(ay - by) < 1:  # горизонтальный участок – подпись под линией
+                lx, ly = ax + 8, ay + 4
+            else:
+                lx, ly = ax + 6, (ay + by) / 2 - 7
+            di.append(f'        <bpmndi:BPMNLabel><dc:Bounds x="{lx:.0f}" y="{ly:.0f}" width="26" height="14" /></bpmndi:BPMNLabel>')
         di.append("      </bpmndi:BPMNEdge>")
     for did, name, task in DATA:
         tx, ty, tw, th = shapes[task]

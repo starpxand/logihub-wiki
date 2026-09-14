@@ -67,6 +67,10 @@ nav:
       - Развёртывание: tech/deployment.md
   - Процессы:
       - process/index.md
+  - Дизайн:
+      - design/index.md
+  - Аналитика:
+      - analytics/dashboard.md
   - Команда:
       - Регламент дежурств: team/on-call.md
       - Применение ИИ: team/ai-usage.md

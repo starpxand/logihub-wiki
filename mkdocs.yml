@@ -112,4 +112,8 @@ extra:
   generator: false
 
 extra_css:
-  - assets/extra.css
+  - assets/extra.css?v=6
+  - assets/fx.css?v=6
+
+extra_javascript:
+  - assets/fx.js?v=6

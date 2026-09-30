@@ -1,0 +1,192 @@
+/* =====================================================================
+   ЛогиХаб FX – анимации и «живое» оформление
+   ===================================================================== */
+@property --lh-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+
+@keyframes lh-pan      { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes lh-spin     { to { transform: rotate(360deg); } }
+@keyframes lh-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes lh-rotate-angle { to { --lh-angle: 360deg; } }
+@keyframes lh-float    { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes lh-pulse    { 0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, .7); } 70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); } }
+@keyframes lh-aurora-1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(120px, 60px) scale(1.25); } }
+@keyframes lh-aurora-2 { 0%, 100% { transform: translate(0, 0) scale(1.1); } 50% { transform: translate(-140px, -40px) scale(.85); } }
+@keyframes lh-aurora-3 { 0%, 100% { transform: translate(0, 0) scale(.9); } 50% { transform: translate(80px, -90px) scale(1.2); } }
+@keyframes lh-grid     { to { background-position: 42px 42px, 42px 42px; } }
+@keyframes lh-ticker   { to { transform: translateX(-50%); } }
+@keyframes lh-stripes  { to { background-position: 40px 0, 0 0; } }
+@keyframes lh-gauge    { from { stroke-dashoffset: 100; } }
+@keyframes lh-fill     { from { transform: scaleX(0); } }
+@keyframes lh-sheen    { 0% { left: -60%; } 100% { left: 130%; } }
+@keyframes lh-wiggle   { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-10deg) scale(1.1); } 75% { transform: rotate(8deg) scale(1.1); } }
+@keyframes lh-rise     { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Полоса прогресса чтения ---------- */
+#lh-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 10; pointer-events: none;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--lh-amber), var(--lh-orange), #ff5f6d, var(--lh-blue));
+  box-shadow: 0 0 12px rgba(255, 138, 61, .7); }
+
+/* ---------- Переливающаяся шапка ---------- */
+.md-header {
+  background: linear-gradient(270deg, #0b1b3f, #13295c, #1d3f8f, #13295c, #0b1b3f);
+  background-size: 400% 100%; animation: lh-pan 18s ease infinite;
+}
+.md-header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lh-amber), var(--lh-orange), #7aa2ff, transparent);
+  background-size: 200% 100%; animation: lh-pan 6s linear infinite; opacity: .9; }
+.md-tabs__link { position: relative; }
+.md-tabs__link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--lh-amber), var(--lh-orange)); transform: scaleX(0); transition: transform .25s ease; }
+.md-tabs__link:hover::after, .md-tabs__link--active::after { transform: scaleX(1); }
+.md-header__button.md-logo img { transition: transform .6s cubic-bezier(.2, .8, .2, 1.4); }
+.md-header__button.md-logo:hover img { transform: rotate(360deg) scale(1.1); }
+
+/* ---------- Hero: северное сияние, сетка, прожектор ---------- */
+.lh-hero { isolation: isolate; }
+.lh-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(420px 420px at var(--sx, 70%) var(--sy, 30%), rgba(255, 181, 71, .18), transparent 60%); }
+.lh-hero::after { animation: lh-grid 14s linear infinite; z-index: 1; }
+.lh-aurora { position: absolute; inset: -20%; z-index: 0; pointer-events: none; filter: blur(60px); opacity: .75; }
+.lh-aurora i { position: absolute; border-radius: 50%; display: block; mix-blend-mode: screen; }
+.lh-aurora i:nth-child(1) { width: 520px; height: 520px; left: 55%; top: 5%;  background: radial-gradient(circle, rgba(255,138,61,.55), transparent 65%); animation: lh-aurora-1 16s ease-in-out infinite; }
+.lh-aurora i:nth-child(2) { width: 600px; height: 600px; left: 5%;  top: 40%; background: radial-gradient(circle, rgba(47,91,234,.6), transparent 65%);  animation: lh-aurora-2 20s ease-in-out infinite; }
+.lh-aurora i:nth-child(3) { width: 420px; height: 420px; left: 35%; top: -10%; background: radial-gradient(circle, rgba(255,95,109,.35), transparent 65%); animation: lh-aurora-3 18s ease-in-out infinite; }
+.lh-aurora i:nth-child(4) { width: 380px; height: 380px; left: 75%; top: 55%; background: radial-gradient(circle, rgba(122,162,255,.45), transparent 65%); animation: lh-aurora-2 24s ease-in-out infinite reverse; }
+.lh-hero__grid { z-index: 2; }
+.lh-hero__text > * { animation: lh-rise .8s cubic-bezier(.2, .8, .2, 1) both; }
+.lh-hero__text > *:nth-child(2) { animation-delay: .12s; } .lh-hero__text > *:nth-child(3) { animation-delay: .24s; }
+.lh-hero__text > *:nth-child(4) { animation-delay: .36s; } .lh-hero__text > *:nth-child(5) { animation-delay: .48s; }
+
+.lh-live { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; margin-right: .55em;
+  vertical-align: 1px; animation: lh-pulse 1.8s infinite; }
+.lh-hero h1 .lh-shimmer, .lh-shimmer {
+  background: linear-gradient(90deg, #ffb547, #ff8a3d, #ffe1a8, #ff8a3d, #ffb547);
+  background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: lh-pan 5s linear infinite; }
+
+.lh-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.3rem; }
+.lh-chip { display: inline-flex; align-items: center; gap: .4em; font-size: .64rem; padding: .35em .85em; border-radius: 99px;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16); color: rgba(255, 255, 255, .85);
+  transition: background .2s, transform .2s; }
+.lh-chip:hover { background: rgba(255, 181, 71, .18); transform: translateY(-2px); }
+.lh-chip svg { width: 1.05em; height: 1.05em; fill: var(--lh-amber); }
+.lh-chip b { color: #fff; font-size: 1.1em; }
+
+/* кнопки с бликом */
+.lh-btn-shine { position: relative; overflow: hidden; }
+.lh-btn-shine::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent); transform: skewX(-20deg); }
+.lh-btn-shine:hover::after { animation: lh-sheen .8s ease; }
+.lh-hero .md-button { transition: transform .2s, box-shadow .2s; }
+.lh-hero .md-button:hover { transform: translateY(-2px); }
+.lh-hero .md-button--primary { background: linear-gradient(90deg, #ffb547, #ff8a3d, #ff6b4a, #ffb547) !important;
+  background-size: 300% 100% !important; animation: lh-pan 6s ease infinite; box-shadow: 0 8px 24px rgba(255, 138, 61, .35); }
+.lh-hero .md-button--primary:hover { box-shadow: 0 12px 32px rgba(255, 138, 61, .55); }
+
+/* ---------- Орбиты вокруг KPI ---------- */
+.lh-hero__panel { position: relative; }
+.lh-orbit { position: absolute; left: 50%; top: 42%; width: 0; height: 0; z-index: 0; pointer-events: none; }
+.lh-ring { position: absolute; left: 0; top: 0; border-radius: 50%; }
+.lh-ring--1 { width: 460px; height: 460px; margin: -230px 0 0 -230px; border: 1px dashed rgba(255, 181, 71, .4); animation: lh-spin 60s linear infinite; }
+.lh-ring--2 { width: 350px; height: 350px; margin: -175px 0 0 -175px; border: 1px solid rgba(122, 162, 255, .28); animation: lh-spin-rev 40s linear infinite; }
+.lh-ring--3 { width: 560px; height: 560px; margin: -280px 0 0 -280px; border: 1px dotted rgba(255, 255, 255, .18); animation: lh-spin 90s linear infinite; }
+.lh-gauge__orbit { position: absolute; left: 50%; top: 50%; width: 0; height: 0; z-index: 3; pointer-events: none; }
+.lh-gauge__orbit::before { content: ""; position: absolute; width: 186px; height: 186px; margin: -93px 0 0 -93px; border-radius: 50%;
+  border: 1px dashed rgba(255, 181, 71, .35); animation: lh-spin 30s linear infinite; }
+.lh-sat { position: absolute; left: 0; top: 0; width: 0; height: 0; animation: lh-spin var(--t, 24s) linear infinite; }
+.lh-sat em { position: absolute; left: var(--r, 230px); top: 0; margin: -15px 0 0 -15px; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 10px; background: rgba(11, 27, 63, .85); border: 1px solid rgba(255, 181, 71, .45);
+  box-shadow: 0 0 18px rgba(255, 138, 61, .35); }
+.lh-sat em svg { width: 17px; height: 17px; fill: var(--lh-amber); animation: lh-spin-rev var(--t, 24s) linear infinite; }
+.lh-sat--1 { --r: 93px; --t: 14s; }
+.lh-sat--2 { --r: 93px; --t: 14s; animation-delay: -3.5s; } .lh-sat--2 em svg { animation-delay: -3.5s; }
+.lh-sat--3 { --r: 93px; --t: 14s; animation-delay: -7s; } .lh-sat--3 em svg { animation-delay: -7s; }
+.lh-sat--4 { --r: 93px; --t: 14s; animation-delay: -10.5s; } .lh-sat--4 em svg { animation-delay: -10.5s; }
+.lh-gauge-card, .lh-kpi-row { position: relative; z-index: 1; }
+
+/* ---------- Круговая шкала OTIF ---------- */
+.lh-gauge-card { margin-top: 1.2rem; display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: center;
+  background: rgba(11, 27, 63, .55); border: 1px solid rgba(255, 255, 255, .16); border-radius: 18px;
+  padding: 1rem 1.2rem; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(3, 8, 25, .45); }
+.lh-gauge { position: relative; width: 132px; height: 132px; }
+.lh-gauge svg { position: relative; width: 100%; height: 100%; transform: rotate(-90deg); z-index: 1; }
+.lh-gauge__track { fill: none; stroke: rgba(255, 255, 255, .12); stroke-width: 10; }
+.lh-gauge__arc { fill: none; stroke: url(#lhGauge); stroke-width: 10; stroke-linecap: round;
+  stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--val, 87)); animation: lh-gauge 2.2s cubic-bezier(.2, .8, .2, 1) both;
+  filter: drop-shadow(0 0 6px rgba(255, 138, 61, .7)); }
+.lh-gauge__halo { position: absolute; inset: -10px; border-radius: 50%; z-index: 0;
+  background: conic-gradient(from var(--lh-angle), transparent 0 70%, rgba(255, 181, 71, .6), transparent);
+  animation: lh-rotate-angle 4s linear infinite; filter: blur(4px); }
+.lh-gauge__num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2;
+  font-weight: 900; font-size: 1.85rem; line-height: 1; color: #fff; letter-spacing: -.03em; }
+.lh-gauge__num small { font-size: .5em; align-self: flex-end; margin-bottom: 2.65rem; color: var(--lh-amber); margin-left: .1em; }
+.lh-gauge-card__title { font-weight: 700; font-size: .82rem; margin: .15rem 0 .2rem; }
+.lh-kpi__bar i { transform-origin: 0 50%;
+  background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,.28) 0 10px, transparent 10px 20px),
+                    linear-gradient(90deg, var(--lh-amber), var(--lh-orange)) !important;
+  background-size: 40px 100%, 100% 100% !important;
+  animation: lh-fill 2s cubic-bezier(.2, .8, .2, 1) both, lh-stripes 1s linear infinite; }
+.lh-float { animation: lh-float 6s ease-in-out infinite; animation-delay: var(--d, 0s); }
+.lh-kpi { transition: border-color .2s, background .2s; }
+.lh-kpi:hover { border-color: rgba(255, 181, 71, .6); background: rgba(255, 255, 255, .12); }
+
+/* ---------- Бегущая строка процесса ---------- */
+.lh-ticker { position: relative; z-index: 2; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, .1);
+  background: rgba(3, 8, 25, .35);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.lh-ticker__track { display: flex; width: max-content; animation: lh-ticker 45s linear infinite; }
+.lh-ticker:hover .lh-ticker__track { animation-play-state: paused; }
+.lh-ticker span { padding: .75rem 1.4rem; font-size: .68rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .78); white-space: nowrap; position: relative; }
+.lh-ticker span::after { content: "\25C6"; position: absolute; right: -.35rem; top: 50%; margin-top: -.45em; color: var(--lh-orange); font-size: .55rem; }
+
+/* ---------- Карточки: вращающаяся рамка + 3D-наклон ---------- */
+.md-typeset .grid.cards > ul > li { position: relative; isolation: isolate;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.md-typeset .grid.cards > ul > li:hover { --ty: -4px; }
+.md-typeset .grid.cards > ul > li::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 2px; z-index: -1;
+  background: conic-gradient(from var(--lh-angle), var(--lh-amber), var(--lh-orange), #ff5f6d, var(--lh-blue), #7aa2ff, var(--lh-amber));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .3s; animation: lh-rotate-angle 4s linear infinite; }
+.md-typeset .grid.cards > ul > li:hover::before { opacity: 1; }
+.md-typeset .grid.cards > ul > li::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 181, 71, .16), transparent 60%);
+  opacity: 0; transition: opacity .3s; }
+.md-typeset .grid.cards > ul > li:hover::after { opacity: 1; }
+.md-typeset .grid.cards > ul > li:hover .lg { animation: lh-wiggle .6s ease; }
+
+/* ---------- Заголовки и блоки на всех страницах ---------- */
+.md-typeset h1 { background: linear-gradient(90deg, var(--md-default-fg-color) 0%, var(--lh-blue) 45%, var(--lh-orange) 70%, var(--md-default-fg-color) 100%);
+  background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: lh-pan 10s ease infinite; }
+.md-typeset h2::before { background: linear-gradient(180deg, var(--lh-amber), var(--lh-orange), #ff5f6d, var(--lh-amber));
+  background-size: 100% 300%; animation: lh-pan 3s ease infinite; }
+.md-typeset h2 { position: relative; }
+.md-typeset h2::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 90px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--lh-orange), transparent); }
+.md-typeset table:not([class]) tbody tr { transition: background .25s; }
+.md-typeset table:not([class]) tbody tr:hover { background: linear-gradient(90deg, rgba(255, 181, 71, .12), rgba(47, 91, 234, .06)); }
+.md-typeset img:not(.twemoji) { transition: transform .35s ease, box-shadow .35s ease; }
+.md-typeset img:not(.twemoji):hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 22px 50px rgba(15, 23, 42, .18); }
+.md-typeset .admonition { position: relative; overflow: hidden; }
+.md-typeset .admonition::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; z-index: 1;
+  background: linear-gradient(180deg, var(--lh-amber), var(--lh-orange), var(--lh-blue), var(--lh-amber)); background-size: 100% 300%;
+  animation: lh-pan 4s ease infinite; }
+.md-nav__link--active { background: linear-gradient(90deg, rgba(255, 181, 71, .2), transparent); border-radius: 8px;
+  padding: .15em .5em; margin-left: -.5em; }
+.md-footer { background: linear-gradient(270deg, #0b1b3f, #13295c, #1d3f8f, #0b1b3f); background-size: 300% 100%; animation: lh-pan 20s ease infinite; }
+
+/* ---------- Появление при прокрутке ---------- */
+.lh-reveal { opacity: 0; translate: 0 22px; transition: opacity .7s ease, translate .7s cubic-bezier(.2, .8, .2, 1); }
+.lh-reveal.lh-in { opacity: 1; translate: 0 0; }
+
+@media screen and (max-width: 76.1875em) { .lh-orbit { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .lh-reveal { opacity: 1; translate: none; }
+}
+
+.md-typeset h1 > .headerlink { display: none; }
+.lh-gauge { margin: .6rem .4rem; }

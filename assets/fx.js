@@ -1,6 +1,7 @@
 /* ЛогиХаб FX: счётчики, появление при прокрутке, 3D-наклон карточек, прожектор, прогресс чтения */
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var still = /[?&]lh-static/.test(window.location.search);
 
   function counters(root) {
     root.querySelectorAll("[data-count]").forEach(function (el) {
@@ -9,7 +10,7 @@
       var raw = el.dataset.count;
       var target = parseFloat(raw.replace(",", "."));
       var dec = (raw.split(/[.,]/)[1] || "").length;
-      if (reduce || isNaN(target)) return;
+      if (reduce || still || isNaN(target)) return;
       var t0 = null, dur = 1800;
       function step(t) {
         if (t0 === null) t0 = t;
@@ -19,12 +20,13 @@
       }
       el.textContent = (0).toFixed(dec).replace(".", ",");
       requestAnimationFrame(step);
+      setTimeout(function () { el.textContent = raw; }, dur + 150);
     });
   }
 
   var io = null;
   function reveal() {
-    if (reduce || !("IntersectionObserver" in window)) return;
+    if (reduce || still || !("IntersectionObserver" in window)) return;
     if (io) io.disconnect();
     io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {

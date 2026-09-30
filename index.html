@@ -53,7 +53,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/extra.css">
+      <link rel="stylesheet" href="assets/extra.css?v=6">
+    
+      <link rel="stylesheet" href="assets/fx.css?v=6">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -380,33 +382,82 @@
           
         
       
-  <section class="lh-hero">
+  <section class="lh-hero" data-lh-spotlight>
+    <div class="lh-aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="lh-hero__grid md-grid">
       <div class="lh-hero__text">
-        <span class="lh-badge">Вариант 15 · Процесс управления логистикой</span>
-        <h1>Каждая поставка –<br><span>под контролем, в одном окне</span></h1>
+        <span class="lh-badge"><b class="lh-live"></b>Вариант 15 · Процесс управления логистикой</span>
+        <h1>Каждая поставка –<br><span class="lh-shimmer">под контролем, в одном окне</span></h1>
         <p>
           ЛогиХаб – облачная платформа, которая объединяет заявку клиента, склад,
           маршрутизацию, перевозку и приёмку груза в одном сквозном процессе.
           Здесь – вся база знаний продукта: от KPI и планов до архитектуры и регламентов.
         </p>
         <div class="lh-hero__actions">
-          <a href="product/definition/" class="md-button md-button--primary">Узнать о продукте</a>
-          <a href="tech/architecture/" class="md-button lh-button--ghost">Архитектура</a>
+          <a href="product/definition/" class="md-button md-button--primary lh-btn-shine">Узнать о продукте</a>
+          <a href="tech/architecture/" class="md-button lh-button--ghost lh-btn-shine">Архитектура</a>
+        </div>
+        <div class="lh-chips">
+          <span class="lh-chip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 15a3 3 0 0 1 3 3 3 3 0 0 1-3 3 2.99 2.99 0 0 1-2.83-2H14v-2h1.17c.41-1.17 1.52-2 2.83-2m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m0-9a1.43 1.43 0 0 0 1.43-1.43 1.43 1.43 0 1 0-2.86 0A1.43 1.43 0 0 0 18 8m0-5.43a4 4 0 0 1 4 4C22 9.56 18 14 18 14s-4-4.44-4-7.43a4 4 0 0 1 4-4M8.83 17H10v2H8.83A2.99 2.99 0 0 1 6 21a3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V14h2v1.17c.85.3 1.53.98 1.83 1.83M6 17a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1M6 3a3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83V10H5V8.83A2.99 2.99 0 0 1 3 6a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m5 14v-2h2v2zm-4-6H5v-2h2z"/></svg><b data-count="26">26</b> этапов BPMN</span>
+          <span class="lh-chip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.07 4.93-1.41 1.41A8.01 8.01 0 0 1 20 12a8 8 0 0 1-8 8 8 8 0 0 1-8-8c0-4.08 3.05-7.44 7-7.93v2.02C8.16 6.57 6 9.03 6 12a6 6 0 0 0 6 6 6 6 0 0 0 6-6c0-1.66-.67-3.16-1.76-4.24l-1.41 1.41C15.55 9.9 16 10.9 16 12a4 4 0 0 1-4 4 4 4 0 0 1-4-4c0-1.86 1.28-3.41 3-3.86v2.14c-.6.35-1 .98-1 1.72a2 2 0 0 0 2 2 2 2 0 0 0 2-2c0-.74-.4-1.38-1-1.72V2h-1A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10c0-2.76-1.12-5.26-2.93-7.07"/></svg><b data-count="5">5</b> микросервисов</span>
+          <span class="lh-chip"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"/></svg><b data-count="10">10</b> экранов макета</span>
         </div>
       </div>
+
       <div class="lh-hero__panel">
-        <div class="lh-kpi lh-kpi--main">
-          <div class="lh-kpi__label">OTIF · релиз v2.0</div>
-          <div class="lh-kpi__value">87<small>%</small></div>
-          <div class="lh-kpi__bar"><i style="width:87%"></i></div>
-          <div class="lh-kpi__hint">Цель 2026 – 90 %</div>
+        <div class="lh-orbit" aria-hidden="true">
+          <span class="lh-ring lh-ring--1"></span>
+          <span class="lh-ring lh-ring--2"></span>
+          <span class="lh-ring lh-ring--3"></span>
         </div>
+
+        <div class="lh-gauge-card lh-float">
+          <div class="lh-gauge" style="--val: 87">
+            <span class="lh-gauge__halo"></span>
+            <span class="lh-gauge__orbit" aria-hidden="true">
+              <span class="lh-sat lh-sat--1"><em><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13.5 2.25 12H7.5l-.6-1.5H2L1.25 9h7.8l-.6-1.5H1.11L.25 6H4a2 2 0 0 1 2-2h12v4h3l3 4v5h-2a3 3 0 0 1-3 3 3 3 0 0 1-3-3h-4a3 3 0 0 1-3 3 3 3 0 0 1-3-3H4v-3.5zm16 5a1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5 1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5m1.5-9H18V12h4.46zM9 18.5a1.5 1.5 0 0 0 1.5-1.5A1.5 1.5 0 0 0 9 15.5 1.5 1.5 0 0 0 7.5 17 1.5 1.5 0 0 0 9 18.5"/></svg></em></span>
+              <span class="lh-sat lh-sat--2"><em><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19h2v2H6zm6-16L2 8v13h2v-8h16v8h2V8zm-4 8H4V9h4zm6 0h-4V9h4zm6 0h-4V9h4zM6 15h2v2H6zm4 0h2v2h-2zm0 4h2v2h-2zm4 0h2v2h-2z"/></svg></em></span>
+              <span class="lh-sat lh-sat--3"><em><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.99.99 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88zM12 4.15l-1.89 1.07L16 8.61l1.96-1.11zM6.04 7.5 12 10.85l1.96-1.1-5.88-3.4zM5 15.91l6 3.38v-6.71L5 9.21zm14 0v-6.7l-6 3.37v6.71z"/></svg></em></span>
+              <span class="lh-sat lh-sat--4"><em><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 15a3 3 0 0 1 3 3 3 3 0 0 1-3 3 2.99 2.99 0 0 1-2.83-2H14v-2h1.17c.41-1.17 1.52-2 2.83-2m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m0-9a1.43 1.43 0 0 0 1.43-1.43 1.43 1.43 0 1 0-2.86 0A1.43 1.43 0 0 0 18 8m0-5.43a4 4 0 0 1 4 4C22 9.56 18 14 18 14s-4-4.44-4-7.43a4 4 0 0 1 4-4M8.83 17H10v2H8.83A2.99 2.99 0 0 1 6 21a3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V14h2v1.17c.85.3 1.53.98 1.83 1.83M6 17a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1M6 3a3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83V10H5V8.83A2.99 2.99 0 0 1 3 6a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m5 14v-2h2v2zm-4-6H5v-2h2z"/></svg></em></span>
+            </span>
+            <svg viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="lhGauge" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#ffb547"/><stop offset=".6" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ff5f6d"/>
+                </linearGradient>
+              </defs>
+              <circle class="lh-gauge__track" cx="60" cy="60" r="50"/>
+              <circle class="lh-gauge__arc" cx="60" cy="60" r="50" pathLength="100"/>
+            </svg>
+            <div class="lh-gauge__num"><span data-count="87">87</span><small>%</small></div>
+          </div>
+          <div class="lh-gauge-card__text">
+            <div class="lh-kpi__label">OTIF · релиз v2.0</div>
+            <div class="lh-gauge-card__title">Точно в срок и в полном объёме</div>
+            <div class="lh-kpi__bar"><i style="width:87%"></i></div>
+            <div class="lh-kpi__hint">Цель 2026 – 90 %</div>
+          </div>
+        </div>
+
         <div class="lh-kpi-row">
-          <div class="lh-kpi"><div class="lh-kpi__label">v1.0</div><div class="lh-kpi__value">72<small>%</small></div></div>
-          <div class="lh-kpi"><div class="lh-kpi__label">v1.5</div><div class="lh-kpi__value">81<small>%</small></div></div>
-          <div class="lh-kpi"><div class="lh-kpi__label">Заказов</div><div class="lh-kpi__value">5,8<small>тыс.</small></div></div>
+          <div class="lh-kpi lh-float" style="--d: .4s"><div class="lh-kpi__label">v1.0</div><div class="lh-kpi__value"><span data-count="72">72</span><small>%</small></div></div>
+          <div class="lh-kpi lh-float" style="--d: .9s"><div class="lh-kpi__label">v1.5</div><div class="lh-kpi__value"><span data-count="81">81</span><small>%</small></div></div>
+          <div class="lh-kpi lh-float" style="--d: 1.4s"><div class="lh-kpi__label">Заказов</div><div class="lh-kpi__value"><span data-count="5,8">5,8</span><small>тыс.</small></div></div>
         </div>
+      </div>
+    </div>
+
+    <div class="lh-ticker" aria-hidden="true">
+      <div class="lh-ticker__track">
+        
+        <span>Приём заявки</span><span>Проверка менеджером</span><span>Счёт и оплата</span><span>Комплектация на складе</span>
+        <span>Маркировка и ТТН</span><span>Маршрутизация</span><span>Перевозка</span><span>Контроль отклонений</span>
+        <span>Приёмка груза</span><span>Закрытие заказа · OTIF</span>
+        
+        <span>Приём заявки</span><span>Проверка менеджером</span><span>Счёт и оплата</span><span>Комплектация на складе</span>
+        <span>Маркировка и ТТН</span><span>Маршрутизация</span><span>Перевозка</span><span>Контроль отклонений</span>
+        <span>Приёмка груза</span><span>Закрытие заказа · OTIF</span>
+        
       </div>
     </div>
   </section>
@@ -1702,6 +1753,8 @@
     
     
       <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="assets/fx.js?v=6"></script>
       
     
   </body>
